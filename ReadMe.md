@@ -35,13 +35,13 @@ The `client_faulty.go` script represents **current prometurbo HTTP client flow**
 The `client_fix.go` script is an **optimized version** of the faulty client that **properly manages HTTP connections**, preventing **socket accumulation**.
 
 ### **Key Fixes**
-Uses a **Shared HTTP client** instead of creating a new instance per request.  
-**Enables Keep-Alive connections** to reuse existing TCP sockets.  
-**Implements `IdleConnTimeout`** to close idle connections efficiently. 
-Optimizes connection pooling with:
-MaxIdleConns: 5 → Allows up to 5 idle connections globally, ensuring connection reuse when handling multiple slow-responding servers, reducing the need to create new connections.
-MaxIdleConnsPerHost: 2 → Limits each host to 2 idle connections, preventing a single slow-responding host from occupying too many resources, ensuring fair connection distribution across multiple hosts.
-Calls **`CloseIdleConnections()`** when a request fails to prevent stale connections.  
+- Uses a **Shared HTTP client** instead of creating a new instance per request.  
+- **Enables Keep-Alive connections** to reuse existing TCP sockets.  
+- **Implements `IdleConnTimeout`** to close idle connections efficiently. 
+- **Optimizes connection pooling with:**
+1) MaxIdleConns: 5 → Allows up to 5 idle connections globally, ensuring connection reuse when handling multiple slow-responding servers, reducing the need to create new connections.
+2) MaxIdleConnsPerHost: 2 → Limits each host to 2 idle connections, preventing a single slow-responding host from occupying too many resources, ensuring fair connection distribution across multiple hosts.
+- Calls **`CloseIdleConnections()`** when a request fails to prevent stale connections.  
 
 ### **Behavior**
 - Sends **periodic HTTP requests** while ensuring that **excessive TCP sockets do not accumulate**.
