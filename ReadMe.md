@@ -23,9 +23,7 @@ The `client_faulty.go` script represents **current prometurbo HTTP client flow**
 - Does not efficiently handle **slow server responses**.
 
 ### **Expected Behavior**
-**High number of open TCP sockets.**  
-**Possible exhaustion of system resources.**  
-**Increasing delays or failures due to accumulated connections.**  
+**High number of open TCP sockets.** 
 
 ---
 
@@ -49,9 +47,7 @@ The `client_fix.go` script is an **optimized version** of the faulty client that
 - Ensures **only required connections remain active**, improving **resource utilization**.
 
 ### **Expected Improvements**
-**Reduced number of open TCP sockets** by reusing existing connections.  
-**Better performance** due to efficient connection handling.  
-**Lower resource consumption**, preventing system exhaustion.  
+**Reduced number of open TCP sockets** by reusing existing connections. 
 
 ---
 
